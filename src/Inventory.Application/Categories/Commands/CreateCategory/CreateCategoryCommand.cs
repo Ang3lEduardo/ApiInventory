@@ -5,8 +5,5 @@ using System.Threading.Tasks;
 
 namespace Inventory.Application.Categories.Commands.CreateCategory
 {
-    public class CreateCategoryCommand
-    {
-        public required string Name { get; set; }
-    }
+    public sealed record CreateCategoryCommand(string Name);
 }

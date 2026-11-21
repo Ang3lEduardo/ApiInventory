@@ -5,8 +5,5 @@ using System.Threading.Tasks;
 
 namespace Inventory.Application.Products.Commands.DeleteProduct
 {
-    public class DeleteProductCommand
-    {
-        
-    }
+    public sealed record DeleteProductCommand(int Id);
 }

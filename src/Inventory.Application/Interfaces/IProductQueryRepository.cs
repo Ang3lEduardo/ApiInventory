@@ -8,7 +8,10 @@ namespace Inventory.Application.Interfaces
 {
     public interface IProductQueryRepository
     {
-        Task<List<Product>> GetAsync(
+        Task<List<Product>> GetAllAsync(
             CancellationToken cancellationToken);
+
+        Task<Product?> GetByIdAsync(int id, 
+                            CancellationToken cancellationToken);
     }
 }

@@ -8,7 +8,10 @@ namespace Inventory.Application.Interfaces
 {
     public interface ICategoryQueryRepository
     {
-        Task<List<Category>> GetAsync(
+        Task<List<Category>> GetAllAsync(
             CancellationToken cancellationToken);
+
+        Task<Category?> GetByIdAsync(int id, 
+                            CancellationToken cancellationToken);
     }
 }

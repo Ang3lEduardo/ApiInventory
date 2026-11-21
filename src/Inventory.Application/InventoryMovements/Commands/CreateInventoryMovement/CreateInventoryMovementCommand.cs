@@ -2,8 +2,5 @@
 
 namespace Inventory.Application.InventoryMovements.Commands.CreateInventoryMovement
 {
-    public class CreateInventoryMovementCommand
-    {
-        
-    }
+    public sealed record CreateInventoryMovementCommand(int ProductId, int Quantity, int MovementType);
 }

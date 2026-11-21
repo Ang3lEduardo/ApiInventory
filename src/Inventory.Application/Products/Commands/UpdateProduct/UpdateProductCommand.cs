@@ -5,8 +5,5 @@ using System.Threading.Tasks;
 
 namespace Inventory.Application.Products.Commands.UpdateProduct
 {
-    public class UpdateProductCommand
-    {
-        
-    }
+    public sealed record UpdateProductCommand(int Id, string Name, int CategoryId, int Stock);
 }

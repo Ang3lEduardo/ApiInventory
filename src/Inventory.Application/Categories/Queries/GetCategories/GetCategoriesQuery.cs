@@ -5,8 +5,5 @@ using System.Threading.Tasks;
 
 namespace Inventory.Application.Categories.Queries.GetCategories
 {
-    public class GetCategoriesQuery
-    {
-        
-    }
+    public sealed record GetCategoriesQuery;
 }

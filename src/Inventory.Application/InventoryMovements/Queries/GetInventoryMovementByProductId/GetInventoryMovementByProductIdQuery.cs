@@ -5,8 +5,5 @@ using System.Threading.Tasks;
 
 namespace Inventory.Application.InventoryMovements.Queries.GetInventoryMovementByProductId
 {
-    public class GetInventoryMovementByProductIdQuery
-    {
-        
-    }
+    public sealed record GetInventoryMovementByProductIdQuery(int ProductId);
 }

@@ -5,8 +5,5 @@ using System.Threading.Tasks;
 
 namespace Inventory.Application.Products.Commands.CreateProduct
 {
-    public class CreateProductCommand
-    {
-        
-    }
+    public sealed record CreateProductCommand(string Name, int CategoryId, int Stock);
 }

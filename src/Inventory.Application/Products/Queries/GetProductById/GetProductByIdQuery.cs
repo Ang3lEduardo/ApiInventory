@@ -5,8 +5,5 @@ using System.Threading.Tasks;
 
 namespace Inventory.Application.Products.Queries.GetProductById
 {
-    public class GetProductByIdQuery
-    {
-        
-    }
+    public sealed record GetProductByIdQuery(int Id);
 }

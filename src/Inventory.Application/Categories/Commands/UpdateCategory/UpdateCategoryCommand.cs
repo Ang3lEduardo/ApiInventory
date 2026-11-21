@@ -5,8 +5,5 @@ using System.Threading.Tasks;
 
 namespace Inventory.Application.Categories.Commands.UpdateCategory
 {
-    public class UpdateCategoryCommand
-    {
-        
-    }
+    public sealed record UpdateCategoryCommand(int Id, string Name);
 }

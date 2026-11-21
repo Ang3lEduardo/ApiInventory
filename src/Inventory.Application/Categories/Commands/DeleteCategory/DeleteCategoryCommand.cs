@@ -5,8 +5,5 @@ using System.Threading.Tasks;
 
 namespace Inventory.Application.Categories.Commands.DeleteCategory
 {
-    public class DeleteCategoryCommand
-    {
-        
-    }
+    public sealed record DeleteCategoryCommand(int Id);
 }
