@@ -7,6 +7,6 @@ namespace Inventory.Application.Categories.Commands.CreateCategory
 {
     public class CreateCategoryCommand
     {
-        
+        public required string Name { get; set; }
     }
 }

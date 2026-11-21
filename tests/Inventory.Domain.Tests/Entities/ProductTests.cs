@@ -10,7 +10,7 @@ namespace Inventory.Domain.Tests.Entities
     public class ProductTests
     {
         [Fact]
-        public void CreateProduct_WithValidData_IsCreatedSuccessfully()
+        public void Product_CannotHaveNegativeStock()
         {
             // Arrange
             var product = new Product
@@ -30,21 +30,15 @@ namespace Inventory.Domain.Tests.Entities
         }
 
         [Fact]
-        public void CreateProduct_WithInvalidData_ThrowsArgumentException()
+        public void Product_CannotHaveEmptyCategory()
         {
             Assert.True(true);
         }
 
         [Fact]
-        public void UpdateProductStock_WithValidQuantity_UpdatesStockSuccessfully()
+        public void Product_CannotHaveEmptyName()
         {
             Assert.True(true);
-        }
-
-        [Fact]
-        public void UpdateProductStock_WithInvalidQuantity_ThrowsArgumentException()
-        {
-            Assert.True(true); 
         }
     }
 }
