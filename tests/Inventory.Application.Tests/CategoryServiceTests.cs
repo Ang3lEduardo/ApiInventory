@@ -15,7 +15,7 @@ namespace Inventory.Application.Tests
             using var cancellationSource = new CancellationTokenSource();
 
             var result = await handler.HandleAsync(
-                new CreateCategoryCommand { Name = "Hardware" },
+                new CreateCategoryCommand("Hardware"),
                 cancellationSource.Token);
 
             Assert.Equal(42, result);
