@@ -15,7 +15,7 @@ namespace Inventory.Infrastructure.Persistence.Configurations
                 ?? throw new InvalidOperationException("Connection string 'InventoryDb' not found.");
         }
 
-        public IDbConnection CreateConnection()
+        public SqlConnection CreateConnection()
         {
             return new SqlConnection(_connectionString);
         }

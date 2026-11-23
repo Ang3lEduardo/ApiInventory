@@ -9,7 +9,7 @@ namespace Inventory.Application.Interfaces
 {
     public interface IInventoryMovementCommandRepository
     {
-        Task<int> CreateAsync(
+        Task CreateAsync(
         InventoryMovement inventoryMovement,
         CancellationToken cancellationToken);
     }

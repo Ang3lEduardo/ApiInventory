@@ -1,9 +1,10 @@
 using System.Data;
+using Microsoft.Data.SqlClient;
 
 namespace Inventory.Infrastructure.Persistence
 {
     public interface IDbConnectionFactory
     {
-        IDbConnection CreateConnection();
+        SqlConnection CreateConnection();
     }
 }
