@@ -27,17 +27,19 @@ namespace Inventory.Application.Tests.Fakes
         {
             if(product.CategoryId <= 0)
             {
-                throw new InvalidOperationException(
-                    $"A product must have a valid category.");
+                throw new ArgumentException(
+                    $"El producto debe tener una categoría válida.");
             }
 
             var existingProduct = _products
-                .FirstOrDefault(x => x.Name == product.Name);
+                .FirstOrDefault(x => x.Id == product.Id)
+                ?? _products.FirstOrDefault(x =>
+                    string.Equals(x.Name, product.Name, StringComparison.OrdinalIgnoreCase));
 
             if (existingProduct is null)
             {
                 throw new InvalidOperationException(
-                    $"Product with name {product.Name} was not found.");
+                    $"El producto con nombre {product.Name} no fue encontrado.");
             }
 
             existingProduct.Name = product.Name;
@@ -56,7 +58,7 @@ namespace Inventory.Application.Tests.Fakes
             if (product is null)
             {
                 throw new InvalidOperationException(
-                    $"Product with id {id} was not found.");
+                    $"El producto con id {id} no fue encontrado.");
             }
 
             _products.Remove(product);

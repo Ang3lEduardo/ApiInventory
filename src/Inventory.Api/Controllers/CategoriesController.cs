@@ -4,10 +4,13 @@ using Inventory.Application.Categories.Commands.UpdateCategory;
 using Inventory.Application.Categories.Queries.GetCategories;
 using Inventory.Application.Categories.Queries.GetCategoryById;
 using Inventory.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Inventory.Api.Controllers;
 
+/// <summary>Provides endpoints for managing product categories.</summary>
+[Authorize]
 [ApiController]
 [Route("api/categories")]
 public class CategoriesController : ControllerBase
@@ -18,6 +21,7 @@ public class CategoriesController : ControllerBase
     private readonly GetCategoriesQueryHandler _getCategoriesHandler;
     private readonly GetCategoryByIdQueryHandler _getCategoryByIdHandler;
 
+    /// <summary>Initializes a new instance of the <see cref="CategoriesController"/> class.</summary>
     public CategoriesController(
         CreateCategoryCommandHandler createCategoryHandler,
         UpdateCategoryCommandHandler updateCategoryHandler,
@@ -32,6 +36,10 @@ public class CategoriesController : ControllerBase
         _getCategoryByIdHandler = getCategoryByIdHandler;
     }
 
+    /// <summary>Gets all categories.</summary>
+    /// <param name="cancellationToken">A token to cancel the request.</param>
+    /// <returns>The list of categories.</returns>
+    /// <response code="200">Returns the categories.</response>
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Category>>> GetAll(
         CancellationToken cancellationToken)
@@ -43,6 +51,12 @@ public class CategoriesController : ControllerBase
         return Ok(categories);
     }
 
+    /// <summary>Gets a category by its identifier.</summary>
+    /// <param name="id">The category identifier.</param>
+    /// <param name="cancellationToken">A token to cancel the request.</param>
+    /// <returns>The matching category.</returns>
+    /// <response code="200">Returns the category.</response>
+    /// <response code="404">No category exists with the specified identifier.</response>
     [HttpGet("{id:int}")]
     public async Task<ActionResult<Category>> GetById(
         int id,
@@ -55,6 +69,11 @@ public class CategoriesController : ControllerBase
         return category is null ? NotFound() : Ok(category);
     }
 
+    /// <summary>Creates a category.</summary>
+    /// <param name="command">The category details.</param>
+    /// <param name="cancellationToken">A token to cancel the request.</param>
+    /// <returns>The created category.</returns>
+    /// <response code="201">Returns the created category.</response>
     [HttpPost]
     public async Task<ActionResult> Create(
         CreateCategoryCommand command,
@@ -74,6 +93,12 @@ public class CategoriesController : ControllerBase
             _category);
     }
 
+    /// <summary>Updates a category.</summary>
+    /// <param name="id">The category identifier.</param>
+    /// <param name="command">The updated category details.</param>
+    /// <param name="cancellationToken">A token to cancel the request.</param>
+    /// <returns>No content when the category is updated.</returns>
+    /// <response code="204">The category was updated.</response>
     [HttpPut("{id:int}")]
     public async Task<IActionResult> Update(
         int id,
@@ -84,7 +109,7 @@ public class CategoriesController : ControllerBase
 
         if (commandWithId.Id != id)
         {
-            return BadRequest("The route ID must match the command ID.");
+            return BadRequest("El Id no es correcto.");
         }
 
         await _updateCategoryHandler.HandleAsync(
@@ -94,6 +119,11 @@ public class CategoriesController : ControllerBase
         return NoContent();
     }
 
+    /// <summary>Deletes a category.</summary>
+    /// <param name="id">The category identifier.</param>
+    /// <param name="cancellationToken">A token to cancel the request.</param>
+    /// <returns>No content when the category is deleted.</returns>
+    /// <response code="204">The category was deleted.</response>
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(
         int id,

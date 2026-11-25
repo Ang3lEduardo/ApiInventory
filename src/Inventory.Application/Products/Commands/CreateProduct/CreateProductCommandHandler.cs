@@ -22,12 +22,10 @@ namespace Inventory.Application.Products.Commands.CreateProduct
         {
             ArgumentNullException.ThrowIfNull(command);
 
-            var product = new Product
-            {
-                Name = command.Name,
-                CategoryId = command.CategoryId,
-                Stock = command.Stock
-            };
+            var product = Product.Create(
+                            command.Name,
+                            command.CategoryId,
+                            command.Stock);
 
             return await _repository.CreateAsync(product, cancellationToken);
         }

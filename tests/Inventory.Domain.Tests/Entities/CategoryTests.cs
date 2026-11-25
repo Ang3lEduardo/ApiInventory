@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Inventory.Domain.Entities;
 using Xunit;
 
 namespace Inventory.Domain.Tests.Entities
@@ -11,7 +12,11 @@ namespace Inventory.Domain.Tests.Entities
         [Fact]
         public void Category_CannotHaveEmptyName()
         {
-            Assert.True(true);
+            Assert.Throws<ArgumentException>(() =>
+                new Category
+                {
+                    Name = string.Empty
+                });
         }
     }
 }

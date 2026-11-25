@@ -13,5 +13,27 @@ namespace Inventory.Domain.Entities
         public int Quantity { get; set; }
         public required MovementType MovementType { get; set; }
         public DateTime MovementDate { get; set; }
+
+        public static InventoryMovement Create(
+            int id,
+            int productId,
+            int quantity,
+            MovementType movementType)
+        {
+            if(quantity <= 0)
+            {
+                throw new ArgumentException(
+                    "Erro en el valor de la cantidad.",
+                    nameof(quantity));
+            }
+
+            return new InventoryMovement
+            {
+                Id = id,
+                ProductId = productId,
+                Quantity = quantity,
+                MovementType = movementType
+            };
+        }
     }
 }

@@ -7,24 +7,25 @@ An ASP.NET Core Web API for managing product categories, products, and inventory
 - Create, read, update, and delete categories
 - Create, read, update, and delete products
 - Record inventory movements and retrieve movement history by product
-- Entity Framework Core for database initialization and persistence, with Dapper for quering data operations
+- Entity Framework Core for database migrations and query operations, with Dapper for command operations
 - OpenAPI documentation through Swagger
+- Bearer-token authentication for API endpoints
 
 ## Requirements
 
 - .NET 8 SDK
 - SQL Server
 
-The API applies EF Core migrations at startup and adds sample categories and products when the category table is empty. Make sure the configured SQL Server is reachable and the database user can create or update the schema.
+At startup, the API applies EF Core migrations and inserts sample categories and products if the category table is empty. Make sure SQL Server is reachable and the configured database user can create or update the schema.
 
 ## Configuration
 
-The API reads its SQL Server connection string from `ConnectionStrings:InventoryDb`. JWT Bearer settings are read from `Authentication:Authority` and `Authentication:Audience`.
+The API reads its SQL Server connection string from `ConnectionStrings:InventoryDb`. JWT Bearer settings are read from `Authentication:Authority` and `Authentication:Audience`. Configure all three values for your environment before starting the API.
 
 For local development, these values can be supplied as environment variables:
 
 ```bash
-export ConnectionStrings__InventoryDb='Server=localhost;Database=InventoryDb;User Id=<user>;Password=<password>;TrustServerCertificate=True;'
+export ConnectionStrings__InventoryDb='Server=localhost,1433;Database=InventoryDb;User Id=<user>;Password=<password>;TrustServerCertificate=True;'
 export Authentication__Authority='https://identity.example.com/<tenant>'
 export Authentication__Audience='inventory-api'
 ```
@@ -37,7 +38,7 @@ The API is configured to use OAuth 2.0 Bearer access tokens. ASP.NET Core JWT Be
 
 The technical requirements do not specify a particular identity provider, so the issuer (`Authority`) and API audience are configurable and are not coupled to a specific vendor. Configure a concrete provider through application settings when deploying the API.
 
-**Current implementation note:** JWT Bearer validation is configured, but the API currently does not call `UseAuthentication()` or apply authorization policies/`[Authorize]` to its controllers. As a result, endpoints are not currently protected by bearer-token enforcement. Enable the authentication middleware and endpoint authorization before relying on the API to require tokens.
+All category, product, and inventory-movement endpoints require a valid bearer access token. The API calls authentication and authorization middleware, and its controllers use `[Authorize]`. Obtain a token from the configured identity provider and send it as `Authorization: Bearer <access-token>`.
 
 ## Run locally
 
@@ -105,7 +106,7 @@ Content-Type: application/json
 }
 ```
 
-The `movementType` value is the integer representation of the `MovementType` enum.
+The `movementType` value is the integer representation of `MovementType`: `1` for `Increase` and `2` for `Decrease`. Decrease movements cannot exceed the product's available stock.
 
 ## Tests
 

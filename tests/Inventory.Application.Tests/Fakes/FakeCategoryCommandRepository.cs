@@ -31,7 +31,7 @@ namespace Inventory.Application.Tests.Fakes
             if (existingCategory is null)
             {
                 throw new InvalidOperationException(
-                    $"Category with id {category.Id} was not found.");
+                    $"La categoría con id {category.Id} no fue encontrada.");
             }
 
             existingCategory.Name = category.Name;
@@ -48,7 +48,7 @@ namespace Inventory.Application.Tests.Fakes
             if (category is null)
             {
                 throw new InvalidOperationException(
-                    $"Category with id {id} was not found.");
+                    $"La categoría con id {id} no fue encontrada.");
             }
 
             _categories.Remove(category);

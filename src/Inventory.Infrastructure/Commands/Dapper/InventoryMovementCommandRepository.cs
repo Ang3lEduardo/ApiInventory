@@ -45,7 +45,7 @@ namespace Inventory.Infrastructure.Commands.Dapper
                     transaction);
 
                 if (rowsAffected == 0)
-                    throw new InvalidOperationException("Insufficient stock or product not found.");
+                    throw new InvalidOperationException("Stock insuficiente o producto no encontrado.");
 
                 await connection.ExecuteAsync(
                     """

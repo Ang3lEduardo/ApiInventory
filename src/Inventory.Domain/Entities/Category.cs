@@ -10,5 +10,22 @@ namespace Inventory.Domain.Entities
         public int Id { get; set; }
         public required string Name { get; set; }
         public ICollection<Product> Products { get; set; } = [];
+
+        public static Category Create (
+            string name
+        )
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentException(
+                    "El nombre es requerido.",
+                    nameof(name));
+            }
+
+            return new Category
+            {
+                Name = name
+            };
+        }
     }
 }

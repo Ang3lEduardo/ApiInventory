@@ -22,12 +22,7 @@ namespace Inventory.Application.Categories.Commands.CreateCategory
             CancellationToken cancellationToken)
         {
             ArgumentNullException.ThrowIfNull(command);
-
-            var category = new Category
-            {
-                Name = command.Name
-            };
-
+            var category = Category.Create(command.Name);
             return await _repository.CreateAsync(category, cancellationToken);
         }
     }
