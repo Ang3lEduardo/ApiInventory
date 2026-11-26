@@ -50,6 +50,22 @@ dotnet run --project src/Inventory.Api/Inventory.Api.csproj
 
 With the `http` launch profile, the API listens at `http://localhost:5295`. Swagger UI is available at `http://localhost:5295/swagger`.
 
+## Run with Docker Compose
+
+As part of the initial setup, create your local environment file, update its values, then build and start the API and SQL Server:
+
+```bash
+cp .env.example .env
+```
+
+Edit `.env` and replace the example values for `SA_PASSWORD`, `JWT_AUTHORITY`, and `JWT_AUDIENCE`. Then run:
+
+```bash
+docker compose up --build -d
+```
+
+The API and Swagger UI are available at `http://localhost:8080` and `http://localhost:8080/swagger`, respectively. Keep `.env` local; do not commit credentials or production secrets.
+
 ## API endpoints
 
 All routes are prefixed with `/api`.

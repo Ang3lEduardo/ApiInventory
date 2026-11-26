@@ -1,6 +1,8 @@
 using System.Reflection;
 using Inventory.Api.Data;
 using Inventory.Application;
+using Inventory.Application.InventoryMovements.Commands.CreateInventoryMovement;
+using Inventory.Domain.Enums;
 using Inventory.Infrastructure;
 using Inventory.Infrastructure.Persistence;
 using Inventory.Infrastructure.Persistence.Configurations;
@@ -9,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//if (!builder.Environment.IsDevelopment()){
+
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -18,21 +20,31 @@ builder.Services
         options.Audience = builder.Configuration["Authentication:Audience"];
     });
     builder.Services.AddAuthorization();
-    //}
+    
 builder.Services.AddScoped<IDbConnectionFactory, SqlConnectionFactory>();
 builder.Services.AddControllers();
 builder.Services.AddDbContext<InventoryDbContext>(options =>
     options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection")));
+        builder.Configuration.GetConnectionString("InventoryDb")));
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    options.IncludeXmlComments(xmlPath);
+    var assemblies = new[]
+    {
+        Assembly.GetExecutingAssembly(),
+        typeof(CreateInventoryMovementCommand).Assembly,
+        typeof(MovementType).Assembly
+    };
+    foreach (var assembly in assemblies)
+    {
+        var xmlFile = $"{assembly.GetName().Name}.xml";
+        var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+        options.IncludeXmlComments(xmlPath);
+    }
+    options.UseAllOfToExtendReferenceSchemas();
 });
 var app = builder.Build();
 
@@ -47,10 +59,10 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
-//if (!builder.Environment.IsDevelopment()){
+
 app.UseAuthentication();
 app.UseAuthorization();
-//}
+
 app.MapControllers();
 
 app.Run();

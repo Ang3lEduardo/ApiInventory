@@ -32,7 +32,7 @@ namespace Inventory.Infrastructure.Commands.Dapper
 
                 var rowsAffected = await connection.ExecuteAsync(
                     """
-                    UPDATE Product
+                    UPDATE Products
                     SET Stock = Stock + @StockChange
                     WHERE Id = @ProductId
                     AND Stock + @StockChange >= 0
@@ -49,10 +49,10 @@ namespace Inventory.Infrastructure.Commands.Dapper
 
                 await connection.ExecuteAsync(
                     """
-                    INSERT INTO InventoryMovement
-                        (ProductId, Quantity, Type, CreatedAt)
+                    INSERT INTO InventoryMovements
+                        (ProductId, Quantity, MovementType, MovementDate)
                     VALUES
-                        (@ProductId, @Quantity, @Type, SYSUTCDATETIME())
+                        (@ProductId, @Quantity, @MovementType, SYSUTCDATETIME())
                     """,
                     inventoryMovement,
                     transaction);

@@ -19,7 +19,7 @@ namespace Inventory.Infrastructure.Commands.Dapper
             CancellationToken cancellationToken)
         {
             const string sql = """
-                INSERT INTO Category(Name)
+                INSERT INTO Categories(Name)
                 VALUES(@Name);
 
                 SELECT CAST(SCOPE_IDENTITY() AS int);
@@ -39,7 +39,7 @@ namespace Inventory.Infrastructure.Commands.Dapper
             CancellationToken cancellationToken)
         {
             const string sql = """
-                UPDATE Category
+                UPDATE Categories
                 SET Name = @Name
                 WHERE Id = @Id;
                 """;
@@ -58,7 +58,7 @@ namespace Inventory.Infrastructure.Commands.Dapper
             CancellationToken cancellationToken)
         {
             const string sql = """
-                DELETE FROM Category
+                DELETE FROM Categories
                 WHERE Id = @Id;
                 """;
 

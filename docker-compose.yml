@@ -11,7 +11,7 @@ services:
       ASPNETCORE_HTTP_PORTS: 8080
       Jwt__Authority: "${JWT_AUTHORITY}"
       Jwt__Audience: "${JWT_AUDIENCE}"
-      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=InventoryDb;User Id=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;"
+      ConnectionStrings__InventoryDb: "Server=sqlserver,1433;Database=InventoryDb;User Id=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;"
     depends_on:
       sqlserver:
         condition: service_healthy

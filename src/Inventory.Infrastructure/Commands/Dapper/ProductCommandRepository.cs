@@ -19,7 +19,7 @@ namespace Inventory.Infrastructure.Commands.Dapper
             CancellationToken cancellationToken = default)
         {
             const string sql = """
-                INSERT INTO Product(Name,Stock,CategoryId)
+                INSERT INTO Products(Name,Stock,CategoryId)
                 VALUES(@Name,@Stock,@CategoryId);
 
                 SELECT CAST(SCOPE_IDENTITY() AS int);
@@ -39,7 +39,7 @@ namespace Inventory.Infrastructure.Commands.Dapper
             CancellationToken cancellationToken = default)
         {
             const string sql = """
-                UPDATE Product
+                UPDATE Products
                 SET Name = @Name,
                     Stock = @Stock,
                     CategoryId = @CategoryId
@@ -60,7 +60,7 @@ namespace Inventory.Infrastructure.Commands.Dapper
             CancellationToken cancellationToken = default)
         {
             const string sql = """
-                DELETE FROM Product
+                DELETE FROM Products
                 WHERE Id = @Id;
                 """;
 
